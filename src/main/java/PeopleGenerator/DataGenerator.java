@@ -2,23 +2,26 @@ package PeopleGenerator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public class DataGenerator {
-    // getTime получает с 1970 года
-    final static long endDate = new Date().getTime();
-    final static Random random = new Random(endDate);
+    final static Random random = new Random();
     final static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    static String birthDate() {
-        long now = ThreadLocalRandom.current().nextLong(0, endDate);
-        return dateFormat.format(new Date(now));
+
+    public static String birthDate(int minAge, int maxAge) {
+        Calendar calendar = new GregorianCalendar();
+        int deltaDay = (int) (-365*(minAge + Math.random()*(maxAge-minAge)));
+        calendar.add(Calendar.DATE, deltaDay);
+        return dateFormat.format(calendar.getTime());
     }
 
-    static String snilsGenerator() {
+    public static String snilsGenerator() {
         int one;
         int summ = 0;
         StringBuilder stringBuilder = new StringBuilder();
